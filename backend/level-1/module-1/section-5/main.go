@@ -33,7 +33,7 @@ type Employee struct{
 	Salary float64
 }
 
-func (e *Employee) raiseЫSalary(percent float64) {
+func (e *Employee) raiseSalary(percent float64) {
 	e.Salary *= (1 + percent / 100)
 }
 
@@ -66,7 +66,7 @@ func main() {
 		Salary: 50000,
 	}
 
-	employee.raiseЫSalary(45)
+	employee.raiseSalary(45)
 	
 	fmt.Printf("New salary: %f\n", employee.Salary)
 }
