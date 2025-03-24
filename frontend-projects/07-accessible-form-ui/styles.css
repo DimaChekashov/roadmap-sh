@@ -1,0 +1,21 @@
+:root {
+  --background-color: #fff;
+  --text-color: #000;
+  --text-accent-color: #666;
+  --accent-color: #007acc;
+  --accent-hover-color: #005bb5;
+  --accent-active-color: #003f87;
+  --border-color: #e0e0e0;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background-color: #121212;
+		--text-color: #e0e0e0;
+		--text-accent-color: #a3a3a3;
+		--accent-color: #bb86fc;
+		--accent-hover-color: #9f63d6;
+		--accent-active-color: #7e3eb0;
+		--border-color: #333;
+	}
+}
