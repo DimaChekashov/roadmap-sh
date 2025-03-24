@@ -7,7 +7,7 @@ import (
 	"path"
 )
 
-import tasksFilePath() string {
+func tasksFilePath() string {
 	cwd, err := os.Getwd()
 	if err != nil {
 		fmt.Println("Error getting current working directory:", err)
@@ -32,7 +32,7 @@ func ReadTasksFromFile() ([]Task, error) {
 		}
 
 		defer file.Close()
-		
+
 		return []Task{}, nil
 	}
 
