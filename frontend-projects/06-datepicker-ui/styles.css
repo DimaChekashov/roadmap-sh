@@ -1,0 +1,132 @@
+:root {
+  --background-color: #fff;
+  --text-color: #000;
+  --text-accent-color: #666;
+  --accent-color: #007acc;
+  --accent-hover-color: #005bb5;
+  --accent-active-color: #003f87;
+  --border-color: #e0e0e0;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background-color: #121212;
+		--text-color: #e0e0e0;
+		--text-accent-color: #a3a3a3;
+		--accent-color: #bb86fc;
+		--accent-hover-color: #9f63d6;
+		--accent-active-color: #7e3eb0;
+		--border-color: #333;
+	}
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+	background-color: var(--background-color);
+}
+
+.datepicker {
+	position: relative;
+	display: inline-block;
+	margin: 20px;
+}
+
+.datepicker-input {
+	display: flex;
+	align-items: center;
+	border: 1px solid var(--border-color);
+	border-radius: 4px;
+	padding: 5px;
+	width: 200px;
+}
+
+.datepicker-input input {
+	border: none;
+	outline: none;
+	flex-grow: 1;
+	padding: 5px;
+	color: var(--text-color);
+}
+
+.datepicker-input button {
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+.datepicker-input button svg {
+	fill: var(--text-color);
+}
+
+.calendar {
+	position: absolute;
+	top: 45px;
+	border: 1px solid var(--border-color);
+	border-radius: 4px;
+	background-color: var(--text-color);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	width: 250px;
+}
+
+.calendar-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	background-color: var(--background-color);
+	border-bottom: 1px solid var(--border-color);
+	color: var(--text-color);
+}
+
+.calendar-header svg {
+	fill: var(--text-color);
+}
+
+.calendar-header button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 18px;
+}
+
+.calendar-body {
+	padding: 10px;
+}
+
+.day-names {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 5px;
+}
+
+.day-names span {
+	width: 30px;
+	text-align: center;
+	font-weight: bold;
+	color: var(--text-accent-color);
+}
+
+.days {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.days span {
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	margin-bottom: 5px;
+	cursor: pointer;
+	color: var(--text-color);
+}
+
+.days span:hover {
+	color: #fff;
+	background-color: var(--accent-color);
+	border-radius: 50%;
+}
