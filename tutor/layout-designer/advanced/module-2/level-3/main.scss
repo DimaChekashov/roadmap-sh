@@ -1,0 +1,172 @@
+.message {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.success-message {
+  @extend .message;
+  background-color: #d4edda;
+  color: #155724;
+}
+
+%message-base {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.success-message {
+  @extend %message-base;
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.error-message {
+  @extend %message-base;
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.container {
+  .button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+.primary-button {
+  @extend .container .button;
+  background-color: blue;
+  color: white;
+}
+
+.success-message {
+  @extend .nonexistent-class !optional;
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.container {
+  width: 100%;
+
+  .element {
+    color: black;
+
+    @at-root {
+      body {
+        background-color: #f0f0f0;
+      }
+    }
+  }
+}
+
+.container {
+  @media (min-width: 768px) {
+    .element {
+      color: black;
+
+      @at-root (with: media) {
+        body {
+          background-color: #f0f0f0;
+        }
+      }
+    }
+  }
+}
+
+.container {
+  @media (min-width: 768px) {
+    .element {
+      color: black;
+
+      @at-root (without: media) {
+        body {
+          background-color: #f0f0f0;
+        }
+      }
+    }
+  }
+}
+
+$primary-color: #007bff;
+$padding: 10px;
+
+@debug $primary-color;
+@debug $padding * 2;
+
+$breakpoints: (
+  small: 576px,
+  medium: 768px,
+  large: 992px,
+  xlarge: 1200px
+);
+
+@function breakpoint-value($key) {
+  @if map-has-key($breakpoints, $key) {
+    @return map-get($breakpoints, $key);
+  } @else {
+    @warn "Breakpoint key '#{$key}' not found in $breakpoints map.";
+    @return null;
+  }
+}
+
+@debug breakpoint-value(medium);
+@debug breakpoint-value(xxlarge);
+
+.button {
+	font-size: 1rem;
+	line-height: 1;
+	padding: 5px;
+	border-radius: 10px;
+}
+
+.primary-button {
+ @extend .button;
+ background-color: blue;
+}
+
+.secondary-button {
+	@extend .button;
+	background-color: rgb(0, 255, 55);
+
+}
+
+.disabled-button {
+	@extend .button;
+	background-color: rgb(99, 99, 99);
+}
+
+.test {
+	.test-inner {
+		.test-inner-inner {
+			@at-root {
+				.hello {
+					color: red;
+				}
+			}
+		}
+	}
+}
+
+$mapColor: (
+  light: #fff,
+  dark: #000,
+  green: rgb(0, 255, 0),
+  blue: rgb(0, 0, 253)
+);
+
+@function breakpoint-value($key) {
+  @if map-has-key($mapColor, $key) {
+    @return map-get($mapColor, $key);
+  } @else {
+    @warn "Map colors key '#{$key}' not found in $breakpoints map.";
+    @return null;
+  }
+}
+
+@debug breakpoint-value(light);
+@debug breakpoint-value(dark);
+@debug breakpoint-value(green);
+@debug breakpoint-value(blue);
