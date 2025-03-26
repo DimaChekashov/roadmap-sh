@@ -56,7 +56,7 @@ func ListTasks(status TaskStatus) error {
 		filteredTasks = tasks
 	case TASK_STATUS_TODO:
 		for _, task := range tasks {
-			if task.Status == TASK_STATUS_Todo {
+			if task.Status == TASK_STATUS_TODO {
 				filteredTasks = append(filteredTasks, task)
 			}
 		}
@@ -94,7 +94,7 @@ func ListTasks(status TaskStatus) error {
 			Foreground(lipgloss.Color(statusColor(task.Status))).
 			Render(string(task.Status))
 
-		relativeUpdatedTime := time.UpdatedAt.Format("2006-01-02 15:04:05")
+		relativeUpdatedTime := task.UpdatedAt.Format("2006-01-02 15:04:05")
 
 		taskStyle := lipgloss.NewStyle().
 			Border(lipgloss.NormalBorder(), false, false, true, false).
@@ -155,7 +155,7 @@ func AddTask(description string) error {
 		Bold(true).
 		Foreground(lipgloss.Color("#FFCC66"))
 
-	formattedId = style.Render(fmt.Sprintf("ID: %d", task.ID))
+	formattedId := style.Render(fmt.Sprintf("ID: %d", task.ID))
 	fmt.Println("\nTask added successfully: %s\n\n", formattedId)
 	return WriteTasksToFile(tasks)
 }
@@ -200,9 +200,9 @@ func UpdateTaskStatus(id int64, status TaskStatus) error {
 			case TASK_STATUS_TODO:
 				task.Status = TASK_STATUS_TODO
 			case TASK_STATUS_IN_PROGRESS:
-				task.status = TASK_STATUS_IN_PROGRESS
+				task.Status = TASK_STATUS_IN_PROGRESS
 			case TASK_STATUS_DONE:
-				task.status = TASK_STATUS_DONE
+				task.Status = TASK_STATUS_DONE
 			}
 			task.UpdatedAt = time.Now()
 		}
