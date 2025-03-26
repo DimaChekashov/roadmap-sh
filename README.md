@@ -17,6 +17,7 @@ Projects for https://roadmap.sh/projects
 12. [Restricted Textarea](https://roadmap.sh/projects/restricted-textarea)
 13. [Accordion](https://roadmap.sh/projects/accordion)
 14. [Age Calculator](https://roadmap.sh/projects/age-calculator)
+15. [Flash Cards](https://roadmap.sh/projects/flash-cards)
 
 ## Backend
 1. [Task Tracker](https://roadmap.sh/projects/task-tracker)
