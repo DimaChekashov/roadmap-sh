@@ -156,7 +156,7 @@ func AddTask(description string) error {
 		Foreground(lipgloss.Color("#FFCC66"))
 
 	formattedId := style.Render(fmt.Sprintf("ID: %d", task.ID))
-	fmt.Println("\nTask added successfully: %s\n\n", formattedId)
+	fmt.Printf("\nTask added successfully: %s\n\n", formattedId)
 	return WriteTasksToFile(tasks)
 }
 
