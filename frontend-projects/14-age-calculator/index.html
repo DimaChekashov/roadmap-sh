@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="A Age Calculator">
+	<meta name="keywords" content="Frontend Project, HTML, Roadmap.sh">
+	<meta name="author" content="Dmitry Chekashov">
+	<title>Age Calculator</title>
+	<link rel="stylesheet" href="https://unpkg.com/js-datepicker/dist/datepicker.min.css">
+	<link rel="stylesheet" href="styles.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.5.0/luxon.min.js" integrity="sha512-SN7iwxiJt9nFKiLayg3NjLItXPwRfBr4SQSIugMeBFrD4lIFJe1Z/exkTZYAg3Ul+AfZEGws2PQ+xSoaWfxRQQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<link rel="icon" href="https://fox-say.ru/favicon.ico" type="image/x-icon">
+</head>
+<body>
+	<div class="calculator">
+		<h1>Age Calculator</h1>
+		<label for="date">Enter your birth date:</label>
+		<input type="text" id="datepicker" placeholder="21/11/2002">
+		<button id="calculate-btn">Calculate</button>
+		<div id="result"></div>
+	</div>
+
+	<script src="https://unpkg.com/js-datepicker"></script>
+	<script src="script.js"></script>
+</body>
+</html>
