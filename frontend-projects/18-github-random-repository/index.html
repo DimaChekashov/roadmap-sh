@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="A GitHub Random Repository">
+	<meta name="keywords" content="Frontend Project, HTML, Roadmap.sh">
+	<meta name="author" content="Dmitry Chekashov">
+	<title>GitHub Random Repository</title>
+	<link rel="stylesheet" href="styles.css">
+	<link rel="icon" href="https://fox-say.ru/favicon.ico" type="image/x-icon">
+</head>
+<body>
+	<div id="app">
+		<header>
+			<img width="32" src="./question-dice.svg" alt="Question Dice" />
+			<h1>GitHub Repo Finder</h1>
+		</header>
+
+		<select id="language-select">
+			<option value="">Select a language</option>
+		</select>
+
+		<div class="response-container" id="repo-details">
+			<p>
+				Please select a language
+			</p>
+		</div>
+		<div class="response-container loading" id="loading" style="display:none;">Loading...</div>
+		<div class="response-container error" id="error" style="display:none;">Something went wrong. Please try again.</div>
+		<div class="response-container empty" id="empty" style="display:none;">No repository found.</div>
+		<button id="refresh" style="display:none;">Refresh</button>
+	</div>
+	
+	<script src="script.js"></script>
+</body>
+</html>
