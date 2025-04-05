@@ -60,3 +60,20 @@ func ReadExpensesFromFile() ([]Expense, error) {
 
 	return tasks, nil
 }
+
+func WriteExpensesToFile(tasks []Expense) error {
+	filePath := expensesFilePath()
+	file, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+
+	defer file.Close()
+
+	err = json.NewEncoder(file).Encode(tasks)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
