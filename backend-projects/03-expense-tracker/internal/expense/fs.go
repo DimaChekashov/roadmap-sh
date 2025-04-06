@@ -77,3 +77,56 @@ func WriteExpensesToFile(tasks []Expense) error {
 
 	return nil
 }
+
+func ReadBudgetsFromFile() ([]Budget, error) {
+	filePath := budgetsFilePath()
+	_, err := os.Stat(filePath)
+	if os.IsNotExist(err) {
+		fmt.Println("File does not exist. Creating file...")
+		file, err := os.Create(filePath)
+		os.WriteFile(filePath, []byte("[]"), os.ModeAppend.Perm())
+
+		if err != nil {
+			fmt.Println("Error creating file:", err)
+			return nil, err
+		}
+
+		defer file.Close()
+
+		return []Budget{}, nil
+	}
+
+	file, err := os.Open(filePath)
+	if err != nil {
+		fmt.Println("Error opening file:", err)
+		return nil, err
+	}
+
+	defer file.Close()
+
+	budgets := []Budget{}
+	err = json.NewDecoder(file).Decode(&budgets)
+	if err != nil {
+		fmt.Println("Error decoding file:", err)
+		return nil, err
+	}
+
+	return budgets, nil
+}
+
+func WriteBudgetsToFile(budgets []Budget) error {
+	filePath := budgetsFilePath()
+	file, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+
+	defer file.Close()
+
+	err = json.NewEncoder(file).Encode(budgets)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
