@@ -5,7 +5,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/DimaChekashov/roadmap-sh/tree/main/backend-projects/03-expense-tracker/internal/expense"
 	"github.com/DimaChekashov/roadmap-sh/tree/main/backend-projects/03-expense-tracker/internal/log"
 	"github.com/charmbracelet/lipgloss"
 )
@@ -79,9 +78,9 @@ func ListExpenses(category string) error {
 	}
 
 	var filteredExpenses []Expense
-	for _, exponse := range expenses {
+	for _, expense := range expenses {
 		if category == "all" || strings.EqualFold(expense.Category, category) {
-			filteredExpenses = append(filteredExpenses, exponse)
+			filteredExpenses = append(filteredExpenses, expense)
 		}
 	}
 
