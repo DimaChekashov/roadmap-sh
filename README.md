@@ -33,4 +33,4 @@ Projects for https://roadmap.sh/projects
 3. [Expense Tracker](https://roadmap.sh/projects/expense-tracker)
 4. []()
 5. [Unit Converter](https://roadmap.sh/projects/unit-converter)
-6. []()
+6. [Personal Blog](https://roadmap.sh/projects/personal-blog)
