@@ -35,3 +35,38 @@ type Response struct {
 	Data    interface{} `json:"data,omitempty"`
 	Success bool        `json:"success,omitempty"`
 }
+
+func WriteJsonResponse(w http.ResponseWriter, data interface{}, message string, status int) {
+	response := Response{
+		Message: message,
+		Success: true,
+		Data:    data,
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(status)
+	json.NewEncoder(w).Encode(response)
+}
+
+func WriteJsonError(w http.ResponseWriter, message string, status int, err error) {
+	w.Header().Set("Content-Type", "application/json")
+	response := Response{
+		Message: message,
+		Error:   err.Error(),
+		Success: false,
+	}
+	w.WriteHeader(status)
+	json.NewEncoder(w).Encode(response)
+}
+
+func FormatDate(t time.Time) string {
+	return t.Format("January 02, 2006")
+}
+
+func ParseDate(s string) (time.Time, error) {
+	return time.Parse("2006-01-02", s)
+}
+
+func GenerateNewID() int {
+	currentId++
+	return currentId
+}
