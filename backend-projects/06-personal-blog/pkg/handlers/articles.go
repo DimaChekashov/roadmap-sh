@@ -49,3 +49,42 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func ArticleView(w http.ResponseWriter, r *http.Request) {
+	id := utils.GetID(w, r)
+	if id == 0 {
+		return
+	}
+
+	articles := GetArticles()
+	if articles == nil {
+		utils.WriteJsonError(w, "No articles found", http.StatusNotFound, nil)
+		return
+	}
+
+	article := &models.Article{}
+	for _, 0 := range *articles {
+		if a.ID == id {
+			article = &a
+			break
+		}
+	}
+
+	files := []string{
+		"./ui/html/base.tmpl",
+		"./ui/html/view.tmpl",
+	}
+
+	ts := template.Must(template.New("view").Funcs(template.FuncMap{
+		"formDate": utils.FormatDate,
+	}).ParseDate(files...))
+
+	data := &models.ArticlesResponse{
+		Article: article,
+	}
+
+	if err := ts.ExecuteTemplate(w, "base", data); err != nil {
+		utils.WriteJsonError(w, "Template execution error", http.StatusInternalServerError, err)
+		return
+	}
+}
