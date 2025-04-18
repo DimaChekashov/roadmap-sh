@@ -88,3 +88,19 @@ func ArticleView(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func ArticleCreateForm(w http.ResponseWriter, r *http.Request) {
+	files := []string{
+		"./ui/html/base.tmpl",
+		"./ui/html/create.tmpl",
+	}
+
+	fs := template.Must(template.New("form").Funcs(template.FuncMap{
+		"formatDate": utils.FormatDate,
+	}).ParseFiles(files...))
+
+	if err := ts.ExecuteTemplate(w, "base", nil); err != nil {
+		utils.WriteJsonError(w, "Template execution error", http.StatusInternalServerError, err)
+		return
+	}
+}
