@@ -249,3 +249,40 @@ func ArticleUpdate(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 }
+
+func ArticleDelete(w http.ResponseWriter, r *http.Request) {
+	id := utils.GetID(w, r)
+	if id == 0 {
+		return
+	}
+
+	articles := GetArticles()
+	if articles == nil {
+		utils.WriteJsonError(w, "No articles found", http.StatusNotFound, nil)
+		return
+	}
+
+	var updatedArticles []models.Article
+	for _, a := range *articles {
+		if a.ID != id {
+			updatedArticles = append(updatedArticles, a)
+		}
+	}
+
+	if len(updatedArticles) == len(*articles) {
+		utils.WriteJsonError(w, "Article not found", http.StatusNotFound, nil)
+		return
+	}
+
+	f, err := os.Create("pkg/data/articles.json")
+	if err != nil {
+		utils.WriteJsonError(w, "Error creating file", http.StatusInternalServerError, err)
+		return
+	}
+	defer f.Close()
+	if err := json.NewEncoder(f).Encode(&updatedArticles); err != nil {
+		utils.WriteJsonError(w, "Error encoding JSON", http.StatusInternalServerError, err)
+		return
+	}
+	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+}
