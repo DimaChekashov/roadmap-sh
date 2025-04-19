@@ -286,3 +286,29 @@ func ArticleDelete(w http.ResponseWriter, r *http.Request) {
 	}
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 }
+
+func Dashboard(w http.ResponseWriter, r *http.Request) {
+	articles := GetArticles()
+	if articles == nil {
+		utils.WriteJsonError(w, "No articles found", http.StatusNotFound, nil)
+		return
+	}
+
+	files := []string{
+		"./ui/html/base.tmpl",
+		"./ui/html/dashboard.tmpl",
+	}
+
+	ts := template.Must(template.New("home").Funcs(template.FuncMap{
+		"formatDate": utils.FormatDate,
+	}).ParseFiles(files...))
+
+	data := &models.ArticlesResponse{
+		Articles: *articles,
+	}
+
+	if err := ts.ExecuteTemplate(w, "base", data); err != nil {
+		utils.WriteJsonError(w, "Template execution error", http.StatusInternalServerError, err)
+		return
+	}
+}
