@@ -104,3 +104,49 @@ func ArticleCreateForm(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func ArticleCreate(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		utils.WriteJsonError(w, "Invalid request method", http.StatusMethodNotAllowed, nil)
+		http.Redirect(w, r, "/new", http.StatusSeeOther)
+		return
+	}
+
+	r.ParseForm()
+	title := r.FormValue("title")
+	content := r.FormValue("content")
+	publishedDate := r.FormValue("publishedDate")
+
+	date, err := utils.ParseDate(publishedDate)
+	if err != nil {
+		utils.WriteJsonError(w, "Invalid date format", http.StatusBadRequest, err)
+		return
+	}
+
+	newArticle := &models.Article{
+		ID:            utils.GenerateNewID(),
+		Title:         title,
+		Content:       content,
+		PublishedDate: date,
+	}
+
+	articles := GetArticles()
+	if articles == nil {
+		articles = &[]models.Article{}
+	}
+
+	*articles = append(*articles, *newArticle)
+
+	f, err := os.Create("pkg/data/articles.json")
+	if err != nil {
+		utils.WriteJsonError(w, "Error creating file", http.StatusInternalServerError, err)
+		return
+	}
+	defer f.Close()
+	if err := json.NewEncoder(f).Encode(&articles); err != nil {
+		utils.WriteJsonError(w, "Error encoding JSON", http.StatusInternalServerError, err)
+		return
+	}
+
+	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+}
