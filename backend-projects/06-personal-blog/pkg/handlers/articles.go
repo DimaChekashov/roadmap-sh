@@ -191,3 +191,61 @@ func ArticleUpdateForm(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func ArticleUpdate(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		utils.WriteJsonError(w, "Invalid request method", http.StatusMethodNotAllowed, nil)
+		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+		return
+	}
+
+	id := utils.GetID(w, r)
+	if id == 0 {
+		return
+	}
+
+	r.ParseForm()
+	title := r.FormValue("title")
+	content := r.FormValue("content")
+	publishedDate := r.FormValue("publishedDate")
+
+	date, err := utils.ParseDate(publishedDate)
+	if err != nil {
+		utils.WriteJsonError(w, "Invalid date format", http.StatusBadRequest, err)
+		return
+	}
+
+	articles := GetArticles()
+	if articles == nil {
+		utils.WriteJsonError(
+			w, "No articles found", http.StatusNotFound, nil)
+		return
+	}
+	var updatedArticles []models.Article
+	for _, a := range *articles {
+		if a.ID == id {
+			updatedArticle := models.Article{
+				ID:            id,
+				Title:         title,
+				Content:       content,
+				PublishedDate: date,
+			}
+			updatedArticles = append(updatedArticles, updatedArticle)
+		} else {
+			updatedArticles = append(updatedArticles, a)
+		}
+	}
+
+	f, err := os.Create("pkg/data/articles.json")
+	if err != nil {
+		utils.WriteJsonError(w, "Error creating file", http.StatusInternalServerError, err)
+		return
+	}
+	defer f.Close()
+	if err := json.NewEncoder(f).Encode(&updatedArticles); err != nil {
+		utils.WriteJsonError(w, "Error encoding JSON", http.StatusInternalServerError, err)
+		return
+	}
+
+	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+}
