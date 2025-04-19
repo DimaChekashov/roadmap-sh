@@ -150,3 +150,44 @@ func ArticleCreate(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 }
+
+func ArticleUpdateForm(w http.ResponseWriter, r *http.Request) {
+	id := utils.GetID(w, r)
+	if id == 0 {
+		return
+	}
+
+	articles := GetArticles()
+	if articles == nil {
+		utils.WriteJsonError(w, "No articles found", http.StatusNotFound, nil)
+		return
+	}
+
+	article := &models.Article{}
+	for _, a := range *articles {
+		if a.ID == id {
+			article = &a
+			break
+		}
+	}
+
+	files := []string{
+		"./ui/html/base.tmpl",
+		"./ui/html/edit.tmpl",
+	}
+
+	ts := template.Must(template.New("edit").Funcs(template.FuncMap{
+		"formatDate": func(t time.Time) string {
+			return t.Format("2006-01-02")
+		},
+	}).ParseFiles(files...))
+
+	data := &models.ArticleResponse{
+		Article: article,
+	}
+
+	if err := ts.ExecuteTemplate(w, "base", data); err != nil {
+		utils.WriteJsonError(w, "Template execution error", http.StatusInternalServerError, err)
+		return
+	}
+}
